@@ -14,10 +14,15 @@ public class Programa
 			Matriz m = new Matriz(l.LerMatriz());
 			Gauss g = new Gauss(m);
 			if(!g.verifica())
-				throw new Exception("Sistema inválido");
-			if(m.temZeroNaDiag() == true)
-				g.trocaZeros();
-			System.out.println(g.resolver());
+			{
+				System.out.println("Sistema inválido");
+			}
+			else
+			{
+				if(m.temZeroNaDiag() == true)
+					g.trocaZeros();
+				System.out.println(g.resolver());
+			}
 		}
 		catch(Exception erro)
 		{

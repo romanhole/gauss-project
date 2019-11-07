@@ -1,3 +1,12 @@
+/**
+A classe Gauss representa método de resolução das equações lidas no arquivo.
+
+Instâncias desta classe permitem a relização das equações.
+Nela encontramos métodos para verificar a possibilidade de resolução das equações,
+fazer cada parte da solução separadamente, como trocar zeros, tornar um e tornar zero.
+@author Rafael Romanhole Borrozino.
+@since 2019.
+*/
 public class Gauss
 {
 	private Matriz m = null;
@@ -12,7 +21,6 @@ public class Gauss
 	public boolean verifica ()
 	{
 		double resultado = 0;
-		double[][] matriz = m.getMatriz();
 		int vezes = 1;
 		double[] algo = new double[m.getLinha()];
 		for(int i=0; i<m.getLinha()-1; i++)
@@ -21,9 +29,7 @@ public class Gauss
 			for(int k=1; k < val; k++)
 		  	{
 		   		for(int j=0; j<m.getLinha(); j++)
-		      	{
-		        	algo[j] = matriz[i][j]/matriz[i+k][j];
-		      	}
+		        	algo[j] = m.getValor(i,j)/m.getValor(i+k,j);
 		      	resultado = algo[0];
 		      	for (int n = 1; n < m.getLinha(); n++)
 		      	{
@@ -38,10 +44,10 @@ public class Gauss
 		return true;
 	}
 
-	public void trocaZeros()
+	public void trocaZeros() throws Exception
 	{
 		int contadorMaximo = 0;
-		while(m.temZeroNaDiag() == true && contadorMaximo < m.getLinha())
+		while(m.temZeroNaDiag() == true && contadorMaximo <=m.getLinha())
 		{
 			for(int i=0; i<m.getLinha(); i++)
 			{
@@ -49,18 +55,16 @@ public class Gauss
 				{
 					if(i != m.getLinha()-1)
 					{
-						//System.out.println("tem " + i +" " + i);
 						double[] essaLinha = m.getVetorLinha(i);
 						double[] deBaixo = m.getVetorLinha(i+1);
 						for(int j=0; j<m.getColuna(); j++)
 						{
-							m.incluir(i, j, deBaixo[j]);
 							m.incluir(i+1, j, essaLinha[j]);
+							m.incluir(i, j, deBaixo[j]);
 						}
 					}
 					else
 					{
-						//System.out.println("tem na ultima");
 						double[] essaLinha = m.getVetorLinha(i);
 						double[] deCima = m.getVetorLinha(i-1);
 						for(int j=0; j<m.getColuna(); j++)
@@ -73,8 +77,8 @@ public class Gauss
 				}
 			}
 		}
-		if(contadorMaximo >=m.getLinha())
-			System.out.println("Sistema inválido");
+		if(contadorMaximo >m.getLinha())
+			throw new Exception("2 Sistema inválido");
 	}
 
 	private void tornarUm(int linha)
@@ -86,7 +90,6 @@ public class Gauss
 			for(int j=0; j<m.getColuna(); j++)
 				m.incluir(linha, j, essaLinha[j]/divisor);
 		}
-		//System.out.println(m);
 	}
 
 	private void tornarZero(int linhaAnterior, int coluna)
@@ -101,7 +104,6 @@ public class Gauss
 				for(int j=0; j<m.getColuna(); j++)
 				{
 					m.incluir(i, j, ultimaLinha[j]*multiplicador + essaLinha[j]);
-					//System.out.println(m);
 				}
 			}
 		}

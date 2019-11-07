@@ -1,6 +1,15 @@
 import java.io.*;
 import java.util.*;
 
+/**
+A classe Leitor representa o prcesso de leitura do arquivo texto e a passagem
+dos dados para uma instância da classe Matriz.
+
+Instâncias desta classe permitem ler um arquivo e armazenar seus valores numa instância da classe Matriz.
+Nela encontramos um método para leitura, que retorna um objeto da classe Matriz.
+@author Rafael Romanhole Borrozino.
+@since 2019.
+*/
 public class Leitor
 {
 	private static String arq = "";

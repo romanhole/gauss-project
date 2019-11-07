@@ -1,3 +1,12 @@
+/**
+A classe Matriz representa o sistema de equações armazenados em matrizes.
+
+Instâncias desta classe permitem a relização da manutenção e acesso a matriz.
+Nela encontramos, não só, métodos para incluir, verificar se a zero na diagonal,
+mas também métodos que permitem consultá-la.
+@author Rafael Romanhole Borrozino.
+@since 2019.
+*/
 public class Matriz implements Cloneable
 {
 	private double m[][] = null;
@@ -10,7 +19,17 @@ public class Matriz implements Cloneable
 
 		this.linhas = linhas;
 		this.colunas = linhas + 1;
-		m = new double[this.linhas][this.linhas + 1];
+		m = new double[this.linhas][this.colunas];
+	}
+
+	public boolean temZeroNaDiag()
+	{
+		for(int i=0; i<linhas; i++)
+		{
+			if(m[i][i] == 0)
+				return true;
+		}
+		return false;
 	}
 
 	public void incluir(int i, int j, double val)
@@ -28,11 +47,6 @@ public class Matriz implements Cloneable
 		return this.colunas;
 	}
 
-	public double[][] getMatriz()
-	{
-		return m;
-	}
-
 	public double getValor(int i, int j)
 	{
 		return m[i][j];
@@ -40,22 +54,7 @@ public class Matriz implements Cloneable
 
 	public double[] getVetorLinha (int qualLinha)
 	{
-		double[] linha = new double[this.colunas];
-		for(int j=0; j<this.colunas; j++)
-		{
-			linha[j] = m[qualLinha][j];
-		}
-		return linha;
-	}
-
-	public boolean temZeroNaDiag()
-	{
-		for(int i=0; i<linhas; i++)
-		{
-			if(m[i][i] == 0)
-				return true;
-		}
-		return false;
+		return m[qualLinha].clone();
 	}
 
 	public Object clone()
@@ -109,8 +108,6 @@ public class Matriz implements Cloneable
 	public String toString()
 	{
 		String ret = "";
-		System.out.println("linhas " + this.linhas);
-		System.out.println("colunas " + this.colunas);
 
 		for(int i=0; i < this.linhas; i++)
 		{
