@@ -1,5 +1,8 @@
 import java.io.*;
 import java.util.*;
+import Leitor.*;
+import Matriz.*;
+import Gauss.*;
 
 public class Programa
 {
