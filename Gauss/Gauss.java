@@ -102,7 +102,7 @@ public class Gauss
 			}
 		}
 		if(contadorMaximo >m.getLinha())  //se o contador máximo for maior que o número máximo de troca de linhas, lança excessão, pois é impossível de resolver
-			throw new Exception("2 Sistema inválido");
+			throw new Exception("Loop, sistema inválido");
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class Gauss
 			return false;
 
 		Gauss g = (Gauss)obj;
-		if (this.m.equals(g.m))   //compara os objetos da classe Matriz
+		if (! this.m.equals(g.m))   //compara os objetos da classe Matriz
 			return false;
 
 		return true;
