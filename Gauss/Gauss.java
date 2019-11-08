@@ -27,7 +27,7 @@ public class Gauss
     */
 	public Gauss (Matriz mt) throws Exception
 	{
-		if(mt == null)
+		if(mt == null) //validação
 			throw new Exception("Matriz nula");
 		m = new Matriz(mt);
 	}
@@ -41,23 +41,20 @@ public class Gauss
     */
 	public boolean verifica () throws Exception
 	{
-		double resultado = 0;
-		int vezes = 1;
-		double[] algo = new double[m.getLinha()];
-		for(int i=0; i<m.getLinha()-1; i++)
+		int vezes = 1; //variável que armazena o número de vezes que há igualdade nas divisões entre as linhas i e j
+		double[] algo = new double[m.getLinha()]; //vetor que armazena o resultado das divisões entre as linhas i e j
+		for(int i=0; i<m.getLinha()-1; i++)  //indice da linha
 		{
-			int val = m.getLinha() - i;
-			for(int k=1; k < val; k++)
+			for(int k=1; k < m.getLinha() - i; k++) //indice para percorrer as linhas abaixo da atual
 		  	{
-		   		for(int j=0; j<m.getLinha(); j++)
-		        	algo[j] = m.getValor(i,j)/m.getValor(i+k,j);
-		      	resultado = algo[0];
+		   		for(int j=0; j<m.getLinha(); j++)  //indice da coluna
+		        	algo[j] = m.getValor(i,j)/m.getValor(i+k,j);  //armazena o valor da divisão entre a linha i e as demais abaixo
 		      	for (int n = 1; n < m.getLinha(); n++)
 		      	{
-		        	if(algo[n] == resultado)
+		        	if(algo[n] == algo[0]) //caso o valor seja igual ao de indice 0, adiciona no vezes
 			    		vezes++;
 				}
-		      	if(vezes == m.getLinha())
+		      	if(vezes == m.getLinha()) //caso o vezes for igual a quantidade de linhas, significa que todas as divisões resultaram no mesmo valor
 		        	return false;
 		        vezes = 1;
 			}
@@ -73,38 +70,38 @@ public class Gauss
     */
 	public void trocaZeros() throws Exception
 	{
-		int contadorMaximo = 0;
-		while(m.temZeroNaDiag() == true && contadorMaximo <=m.getLinha())
+		int contadorMaximo = 0; //variável que armazena o contador que será comparado com o número máximo de vezes que pode-se fazer a troca de linhas
+		while(m.temZeroNaDiag() == true && contadorMaximo <=m.getLinha()) //enquanto tem zero na diagonal e o contador não ultrapassou o número máximo de troca de linhas
 		{
-			for(int i=0; i<m.getLinha(); i++)
+			for(int i=0; i<m.getLinha(); i++) //indice de linhas
 			{
 				if(m.getValor(i, i) == 0)
 				{
-					if(i != m.getLinha()-1)
+					if(i != m.getLinha()-1) //caso não seja a última linha
 					{
-						double[] essaLinha = m.getVetorLinha(i);
-						double[] deBaixo = m.getVetorLinha(i+1);
-						for(int j=0; j<m.getColuna(); j++)
+						double[] essaLinha = m.getVetorLinha(i);  //cria um vetor com os valores da linha com zero na diagonal
+						double[] deBaixo = m.getVetorLinha(i+1);  //cria um vetor com os valores da linha abaixo a linha com zero na diagonal
+						for(int j=0; j<m.getColuna(); j++) //indice de colunas
 						{
-							m.incluir(i+1, j, essaLinha[j]);
+							m.incluir(i+1, j, essaLinha[j]);      //troca as linhas
 							m.incluir(i, j, deBaixo[j]);
 						}
 					}
-					else
+					else                   //caso seja a última linha
 					{
-						double[] essaLinha = m.getVetorLinha(i);
-						double[] deCima = m.getVetorLinha(i-1);
-						for(int j=0; j<m.getColuna(); j++)
+						double[] essaLinha = m.getVetorLinha(i); //cria um vetor com os valores da linha com zero na diagonal
+						double[] deCima = m.getVetorLinha(i-1);  //cria um vetor com os valores da linha de cima a linha com zero na diagonal
+						for(int j=0; j<m.getColuna(); j++) //indice de colunas
 						{
 							m.incluir(i, j, deCima[j]);
-							m.incluir(i-1, j, essaLinha[j]);
+							m.incluir(i-1, j, essaLinha[j]);     //troca as linhas
 						}
 					}
-					contadorMaximo++;
+					contadorMaximo++;  //soma ao contador máximo a cada troca de linha
 				}
 			}
 		}
-		if(contadorMaximo >m.getLinha())
+		if(contadorMaximo >m.getLinha())  //se o contador máximo for maior que o número máximo de troca de linhas, lança excessão, pois é impossível de resolver
 			throw new Exception("2 Sistema inválido");
 	}
 
@@ -116,12 +113,12 @@ public class Gauss
     */
 	protected void tornarUm(int linha) throws Exception
 	{
-		double divisor = m.getValor(linha, linha);
-		if(divisor != 1)
+		double divisor = m.getValor(linha, linha); //pega o valor que tem que tem
+		if(divisor != 1) //caso o valor já não seja 1
 		{
-			double[] essaLinha = m.getVetorLinha(linha);
-			for(int j=0; j<m.getColuna(); j++)
-				m.incluir(linha, j, essaLinha[j]/divisor);
+			double[] essaLinha = m.getVetorLinha(linha); //cria um vetor da linha a ser modificada
+			for(int j=0; j<m.getColuna(); j++) //indice de colunas
+				m.incluir(linha, j, essaLinha[j]/divisor); //divide a linha inteira pelo valor a se tornar 1
 		}
 	}
 
@@ -137,16 +134,16 @@ public class Gauss
     */
 	protected void tornarZero(int linhaAnterior, int coluna) throws Exception
 	{
-		for(int i=0; i<m.getLinha(); i++)
+		for(int i=0; i<m.getLinha(); i++) //indice de linhas
 		{
-			if(i != linhaAnterior && m.getValor(i,coluna) != 0)
+			if(i != linhaAnterior && m.getValor(i,coluna) != 0) //caso o indice não seja igual ao indice da linha anterior e o valor já não seja zero
 			{
-				double multiplicador = (m.getValor(i, coluna))*(-1);
-				double[] ultimaLinha = m.getVetorLinha(linhaAnterior);
-				double[] essaLinha = m.getVetorLinha(i);
-				for(int j=0; j<m.getColuna(); j++)
+				double multiplicador = (m.getValor(i, coluna))*(-1);  //pega o valor a se tornar zero e multiplica por -1 e armazena no multiplicador
+				double[] ultimaLinha = m.getVetorLinha(linhaAnterior); //cria um vetor da linha anterior
+				double[] essaLinha = m.getVetorLinha(i); //cria um vetor da linha a ser modificada
+				for(int j=0; j<m.getColuna(); j++) //indice de colunas
 				{
-					m.incluir(i, j, ultimaLinha[j]*multiplicador + essaLinha[j]);
+					m.incluir(i, j, ultimaLinha[j]*multiplicador + essaLinha[j]); //multiplica todos os seus elementos pelo número que desejamos zerar com o sinal trocado, então soma estes valores aos valores da linha onde desejamos implantar 0
 				}
 			}
 		}
@@ -161,13 +158,13 @@ public class Gauss
 	public String resolver() throws Exception
 	{
 		String str = "";
-		for(int i=0; i<m.getLinha(); i++)
+		for(int i=0; i<m.getLinha(); i++) //indice de linhas
 		{
 			this.tornarUm(i);
-			this.tornarZero(i, i);
+			this.tornarZero(i, i);    //faz cada método para cada linha
 		}
 		for(int i=0; i<m.getLinha(); i++)
-			str += i + 1 + "ª incógnita = " + m.getValor(i, m.getColuna()-1) + "\n";
+			str += i + 1 + "ª incógnita = " + m.getValor(i, m.getColuna()-1) + "\n"; //retorna uma string com as incógnitas em ordem
 		return str;
 	}
 
@@ -194,7 +191,7 @@ public class Gauss
 			return false;
 
 		Gauss g = (Gauss)obj;
-		if (this.m.equals(g.m))
+		if (this.m.equals(g.m))   //compara os objetos da classe Matriz
 			return false;
 
 		return true;
@@ -210,7 +207,7 @@ public class Gauss
 	{
 		String ret = "";
 		ret = m.toString();
-		return ret;
+		return ret;       //retorna a representação grafica do sistema
 	}
 
 	/**

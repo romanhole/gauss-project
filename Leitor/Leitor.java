@@ -28,7 +28,7 @@ public class Leitor
     */
 	public Leitor(String nomeArquivo) throws Exception
 	{
-		if (nomeArquivo == null)
+		if (nomeArquivo == null)  //validação
 			throw new Exception ("nome de arquivo é nulo");
 		this.arq = nomeArquivo;
 	}
@@ -51,9 +51,9 @@ public class Leitor
 			{
 				StringTokenizer quebrador = new StringTokenizer (arquivo.readLine());
 				int j = 0;
-				while(quebrador.hasMoreTokens())
+				while(quebrador.hasMoreTokens()) //enquanto ainda tiver valores para ler
 				{
-					m.incluir(i, j, Double.parseDouble(quebrador.nextToken()));   //inclue token na respectiva linha e coluna
+					m.incluir(i, j, Double.parseDouble(quebrador.nextToken()));   //inclue token na respectiva linha e coluna
 					j++;
 				}
 			}
@@ -103,7 +103,7 @@ public class Leitor
     public String toString()
     {
 		String ret = arq;
-		return ret;
+		return ret;      //retorna o nome do arquivo passado por parâmetro na instanciação da classe
 	}
 
 	/**
