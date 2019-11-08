@@ -92,8 +92,10 @@ public class Matriz implements Cloneable
 		@param j indice da coluna.
 		@return o valor na posição da matriz passada pelos parâmetros.
     */
-	public double getValor(int i, int j)
+	public double getValor(int i, int j) throws Exception
 	{
+		if(i<0 || j<0 || i>linhas || j>colunas)
+			throw new Exception("parãmetros inválidos");
 		return m[i][j];
 	}
 
@@ -102,8 +104,10 @@ public class Matriz implements Cloneable
 			@param qualLinha indice da linha
 			@return um vetor com os valores de uma linha passada pelos parâmetros.
     */
-	public double[] getVetorLinha (int qualLinha)
+	public double[] getVetorLinha (int qualLinha) throws Exception
 	{
+		if(qualLinha<0 || qualLinha>=linhas)
+			throw new Exception("linha inválida");
 		return m[qualLinha].clone();
 	}
 

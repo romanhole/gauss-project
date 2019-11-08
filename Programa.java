@@ -14,7 +14,7 @@ public class Programa
 			System.out.printf("Informe o arquivo para a leitura dos dados:\n");
     		String n = ler.next();
 			Leitor l = new Leitor(n);
-			Matriz m = new Matriz(l.LerMatriz());
+			Matriz m = new Matriz(l.lerMatriz());
 			Gauss g = new Gauss(m);
 			if(!g.verifica())
 			{

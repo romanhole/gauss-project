@@ -37,8 +37,9 @@ public class Gauss
 		Resulta true, caso as divisões não resultem exatamente no mesmo valor, ou false,
 		caso contrário.
 		@return a indicação da possibilidade de resolução dos sistemas.
+		@throws Exception caso desse erro no getValor.
     */
-	public boolean verifica ()
+	public boolean verifica () throws Exception
 	{
 		double resultado = 0;
 		int vezes = 1;
