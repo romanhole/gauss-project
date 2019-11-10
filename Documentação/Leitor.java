@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-
 /**
 A classe Leitor representa o prcesso de leitura do arquivo texto e a passagem
 dos dados para uma instância da classe Matriz.
@@ -15,7 +14,7 @@ public class Leitor
 	/**
 		arq é um atributo que armazena o nome do arquivo que será lido
 	*/
-	protected static String arq = "";
+	protected String arq = "";
 
 	/**
 	    Constroi uma nova instância da classe Leitor.
@@ -26,7 +25,7 @@ public class Leitor
     */
 	public Leitor(String nomeArquivo) throws Exception
 	{
-		if (nomeArquivo == null)
+		if (nomeArquivo == null)  //validação
 			throw new Exception ("nome de arquivo é nulo");
 		this.arq = nomeArquivo;
 	}
@@ -37,28 +36,28 @@ public class Leitor
 	    @return um objeto da classe matriz
 	    @throws Exception quando o nome do arquivo está errado
     */
-	public Matriz LerMatriz() throws Exception
+	public Matriz lerMatriz() throws Exception
 	{
 		Matriz m = null;
 		try
 		{
 			BufferedReader arquivo = new BufferedReader(new FileReader(this.arq));
 			int qtd = Integer.parseInt(arquivo.readLine());
-			m = new Matriz(qtd);
+			m = new Matriz(qtd);       //instância um novo objeto da classe matriz a partir do valor lido na primeira linha
 			for(int i = 0; i < qtd; i++)
 			{
 				StringTokenizer quebrador = new StringTokenizer (arquivo.readLine());
 				int j = 0;
-				while(quebrador.hasMoreTokens())
+				while(quebrador.hasMoreTokens()) //enquanto ainda tiver valores para ler
 				{
-					m.incluir(i, j, Double.parseDouble(quebrador.nextToken()));
+					m.incluir(i, j, Double.parseDouble(quebrador.nextToken()));   //inclue token na respectiva linha e coluna
 					j++;
 				}
 			}
 		}
 		catch(Exception erro)
 		{
-			System.out.println("Deu erro na leitura de dados");
+			throw new Exception("Deu erro na leitura de dados");
 		}
 
 		return m;
@@ -101,7 +100,7 @@ public class Leitor
     public String toString()
     {
 		String ret = arq;
-		return ret;
+		return ret;      //retorna o nome do arquivo passado por parâmetro na instanciação da classe
 	}
 
 	/**

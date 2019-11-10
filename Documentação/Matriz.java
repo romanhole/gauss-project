@@ -61,7 +61,7 @@ public class Matriz implements Cloneable
     */
 	public void incluir(int i, int j, double val) throws Exception
 	{
-		if(i<0 || j<0 || i>linhas || j>colunas)
+		if(i<0 || j<0 || i>linhas || j>colunas)    //validação
 			throw new Exception("valores inválidos para inclusão");
 		this.m[i][j] = val;
 	}
@@ -89,9 +89,14 @@ public class Matriz implements Cloneable
 		@param i indice da linha.
 		@param j indice da coluna.
 		@return o valor na posição da matriz passada pelos parâmetros.
+		@throws Exception se os indices de linhas e colunas forem
+						  menores que 0 ou excederem o número de
+						  linhas e colunas da matriz
     */
-	public double getValor(int i, int j)
+	public double getValor(int i, int j) throws Exception
 	{
+		if(i<0 || j<0 || i>linhas || j>colunas)    //validação
+			throw new Exception("parãmetros inválidos");
 		return m[i][j];
 	}
 
@@ -99,10 +104,15 @@ public class Matriz implements Cloneable
 			Resulta um vetor com os valores de uma linha passada pelos parâmetros.
 			@param qualLinha indice da linha
 			@return um vetor com os valores de uma linha passada pelos parâmetros.
+			@throws Exception se o indice de linha for
+							  menor que 0 ou exceder o número de
+							  linhas da matriz
     */
-	public double[] getVetorLinha (int qualLinha)
+	public double[] getVetorLinha (int qualLinha) throws Exception
 	{
-		return m[qualLinha].clone();
+		if(qualLinha<0 || qualLinha>=linhas)   //validação
+			throw new Exception("linha inválida");
+		return m[qualLinha].clone();   //deep copy
 	}
 
 	/**
@@ -117,7 +127,7 @@ public class Matriz implements Cloneable
 		Matriz ret = null;
 		try
 		{
-			ret = new Matriz(this);
+			ret = new Matriz(this);    //constroi um construtor de copia
 		}
 		catch(Exception erro)
 		{}
@@ -128,17 +138,22 @@ public class Matriz implements Cloneable
 	    Constroi uma cópia da instância da classe Matriz dada.
 	    Para tanto, deve ser fornecida uma instancia da classe Matriz para ser
 	    utilizada como modelo para a construção da nova instância criada.
-	    @param modelo a instância da classe Matriz a ser usada como modelo.
+	    @param mt modelo a instância da classe Matriz a ser usada como modelo.
 	    @throws Exception se o modelo for null.
     */
-	public Matriz (Matriz mt) throws Exception
+	public Matriz (Matriz mt) throws Exception   //construtor de copia
 	{
-		if(mt == null)
+		if(mt == null)    //validação
 			throw new Exception("matriz nula");
 		this.linhas = mt.linhas;
 		this.colunas = mt.colunas;
 		this.m = new double[this.linhas][this.colunas];
-		this.m = mt.m;
+		for(int i=0; i<this.linhas; i++)
+		{
+			for(int j=0; j<this.colunas; j++)      //deep copy
+				this.m[i][j] = mt.m[i][j];
+		}
+
 	}
 
 	/**
@@ -170,7 +185,7 @@ public class Matriz implements Cloneable
 		{
 			for(int j=0; j<this.colunas; j++)
 			{
-				if(this.m[i][j] != mt.m[i][j])
+				if(this.m[i][j] != mt.m[i][j])    //verifica cada elemento da matriz
 					return false;
 			}
 		}
@@ -191,7 +206,7 @@ public class Matriz implements Cloneable
 		for(int i=0; i < this.linhas; i++)
 		{
 			for(int j=0; j < this.colunas; j++)
-				ret += m[i][j] + " ";
+				ret += m[i][j] + " ";            //escreve o sistema em ordem como lido no arquivo
 			ret += "\n";
 		}
 
@@ -212,7 +227,7 @@ public class Matriz implements Cloneable
 		for(int i=0; i<linhas; i++)
 		{
 			for(int j=0; j<colunas; j++)
-				ret = ret*13 + Double.valueOf(m[i][j]).hashCode();
+				ret = ret*13 + Double.valueOf(m[i][j]).hashCode();    //hashCode para cada elemento da matriz
 		}
 
 		if (ret<0)
